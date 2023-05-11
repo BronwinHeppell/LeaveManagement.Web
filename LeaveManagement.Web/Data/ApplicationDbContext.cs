@@ -10,6 +10,11 @@ namespace LeaveManagement.Web.Data
         {
         }
         public DbSet<LeaveType> LeaveTypes { get; set; } 
-        public DbSet<LeaveAllocation> LeaveAllocations { get; set; } 
+        public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
+
+        internal Task SaveChangesAsAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
