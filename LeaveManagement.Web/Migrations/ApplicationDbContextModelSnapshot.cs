@@ -4,18 +4,16 @@ using LeaveManagement.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace LeaveManagement.Web.Data.Migrations
+namespace LeaveManagement.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230509161706_ExtendedUserTable")]
-    partial class ExtendedUserTable
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,6 +100,105 @@ namespace LeaveManagement.Web.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "40faac37-e036-4ea7-b14a-fc1da0dc8746",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b9db9a4c-008c-4bde-b29d-2829741a7758",
+                            DateJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin1@gmail.com",
+                            EmailConfirmed = true,
+                            Firstname = "System",
+                            Lastname = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN1@GMAIL.COM",
+                            NormalizedUserName = "ADMIN1@GMAIL.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMrAjc/tKXGdAbPJrg7r+FPcWz+PHaUK9y5/5BVl+mtsXDMHVFsYmQQHai32GUkFAQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "47bb6ca1-d561-4b3f-a7d4-d027bdb358d0",
+                            TwoFactorEnabled = false,
+                            UserName = "admin1@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "b2b63da8-e248-411b-a5fc-f568ae0ceee1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "191f08d6-0098-4e3d-a367-d991ce6cfe1e",
+                            DateJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "user@localhost.com",
+                            EmailConfirmed = true,
+                            Firstname = "System",
+                            Lastname = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@LOCALHOST.COM",
+                            NormalizedUserName = "USER@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJht3E7WEbsB/2+RcJEFrkJqMI5COCadx0bLrc9zBSpGenfkeFhEwpkmpo8V2GvZOA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "55e52edf-9d27-415b-b7b3-a8b51aefb09e",
+                            TwoFactorEnabled = false,
+                            UserName = "user@localhost.com"
+                        });
+                });
+
+            modelBuilder.Entity("LeaveManagement.Web.Data.LeaveAllocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmployeeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LeaveTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfDays")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LeaveTypeId");
+
+                    b.ToTable("LeaveAllocations");
+                });
+
+            modelBuilder.Entity("LeaveManagement.Web.Data.LeaveType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DefaultDays")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LeaveTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -129,6 +226,22 @@ namespace LeaveManagement.Web.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "37faac37-e036-4ea7-b14a-fc1da0dc8748",
+                            ConcurrencyStamp = "d1e219f3-eb16-4059-9b29-0c38d8c4aeb9",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "c4b63da8-e248-411b-a5fc-f568ae0aaa1",
+                            ConcurrencyStamp = "d3afdb51-48a1-41e2-beb7-dc0fdd40f95d",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -218,6 +331,13 @@ namespace LeaveManagement.Web.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "40faac37-e036-4ea7-b14a-fc1da0dc8746",
+                            RoleId = "37faac37-e036-4ea7-b14a-fc1da0dc8748"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -239,6 +359,17 @@ namespace LeaveManagement.Web.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("LeaveManagement.Web.Data.LeaveAllocation", b =>
+                {
+                    b.HasOne("LeaveManagement.Web.Data.LeaveType", "LeaveType")
+                        .WithMany()
+                        .HasForeignKey("LeaveTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LeaveType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
