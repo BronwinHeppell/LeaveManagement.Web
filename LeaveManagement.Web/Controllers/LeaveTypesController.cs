@@ -16,18 +16,17 @@ using LeaveManagement.Application.Contracts;
 namespace LeaveManagement.Web.Controllers
 {
     [Authorize(Roles = Roles.Administrator)]
+
     public class LeaveTypesController : Controller
     {
- 
+        private readonly ILeaveTypeRepository leaveTypeRepository;
         private readonly IMapper mapper;
-        private object await_context;
-
-        public ILeaveTypeRepository leaveTypeRepository {get; set;}
         private readonly ILeaveAllocationRepository leaveAllocationRepository;
 
-        public LeaveTypesController(ILeaveTypeRepository leaveTypeRepository, IMapper mapper, ILeaveAllocationRepository leaveAllocationRepository)
+        public LeaveTypesController(ILeaveTypeRepository leaveTypeRepository
+            , IMapper mapper
+            , ILeaveAllocationRepository leaveAllocationRepository)
         {
-           
             this.leaveTypeRepository = leaveTypeRepository;
             this.mapper = mapper;
             this.leaveAllocationRepository = leaveAllocationRepository;
@@ -36,21 +35,19 @@ namespace LeaveManagement.Web.Controllers
         // GET: LeaveTypes
         public async Task<IActionResult> Index()
         {
-       
             var leaveTypes = mapper.Map<List<LeaveTypeVM>>(await leaveTypeRepository.GetAllAsync());
-            return View( leaveTypes);
+            return View(leaveTypes);
         }
 
         // GET: LeaveTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-          
-
             var leaveType = await leaveTypeRepository.GetAsync(id);
             if (leaveType == null)
             {
                 return NotFound();
             }
+
             var leaveTypeVM = mapper.Map<LeaveTypeVM>(leaveType);
             return View(leaveTypeVM);
         }
@@ -66,26 +63,28 @@ namespace LeaveManagement.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create (LeaveTypeVM leaveTypeVM)
+
+        public async Task<IActionResult> Create(LeaveTypeVM leaveTypeVM)
         {
             if (ModelState.IsValid)
             {
                 var leaveType = mapper.Map<LeaveType>(leaveTypeVM);
-                await leaveTypeRepository.AddAsync(leaveType);  
+                await leaveTypeRepository.AddAsync(leaveType);
                 return RedirectToAction(nameof(Index));
             }
             return View(leaveTypeVM);
         }
 
+
         // GET: LeaveTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-
             var leaveType = await leaveTypeRepository.GetAsync(id);
             if (leaveType == null)
             {
                 return NotFound();
             }
+
             var leaveTypeVM = mapper.Map<LeaveTypeVM>(leaveType);
             return View(leaveTypeVM);
         }
@@ -107,8 +106,7 @@ namespace LeaveManagement.Web.Controllers
                 try
                 {
                     var leaveType = mapper.Map<LeaveType>(leaveTypeVM);
-                    
-                    await leaveTypeRepository.UpdateAsync(leaveType);   
+                    await leaveTypeRepository.UpdateAsync(leaveType);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -133,9 +131,8 @@ namespace LeaveManagement.Web.Controllers
         {
             await leaveTypeRepository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
-           
-            
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AllocateLeave(int id)
